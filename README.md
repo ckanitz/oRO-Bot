@@ -36,6 +36,7 @@ Run:
 **[0.0.1]**
 - Added base architecture
 - Added module `help`
+- Added module `build` (WIP)
 
 # License
 oRO-Bot is licensed under MIT so that the core functionality of the bot remains open source and free for everyone but any code you write (including server and room IDs for example) for your own Discord servers doesn't have to be.
