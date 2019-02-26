@@ -1,0 +1,12 @@
+{
+	"token"  : "THE_BOT_TOKEN",
+	"prefix" : "!",
+	"modules" : [ "help", "builds" ],
+	"dbInfo"  : {
+		"host"     : "localhost",
+		"port"     : 3306,
+		"user"     : "DBUSER",
+		"password" : "DBUSERPASSWORD",
+		"database" : "discord_bot"
+	}
+}

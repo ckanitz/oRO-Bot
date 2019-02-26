@@ -1,0 +1,5 @@
+{
+	"command": "builds",
+	"args": " {jobclass|keyword} ",
+	"description": "Bsp.: **!builds Knight**, Zeigt verfügbare Builds."
+}

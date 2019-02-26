@@ -1,0 +1,5 @@
+{
+	"command": "orohelp",
+	"args": "",
+	"description": "Zeigt alle verfügbaren Befehle"
+}
