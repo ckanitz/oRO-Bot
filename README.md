@@ -7,7 +7,7 @@ oRO-Bot is designed as a discord bot providing commands helping to organize guil
 oRO-Bot's current feature set includes:
 
 * **!help** command - show available commands
-* **!build** command (WIP) - shows available character builds 
+* **!build** command (WIP) - shows available character builds
 
 # Architecture
 oRO-Bot is a modular discord bot.
@@ -15,6 +15,7 @@ oRO-Bot is a modular discord bot.
 Entrypoint: `/src/index.js`
 Modules: `/src/modules/`
 Library: `/src/lib/`
+Modules: see [Modules](https://github.com/ckanitz/oRO-Bot/tree/master/src/modules)
 
 # Building
 Prerequisits:
