@@ -55,7 +55,7 @@ INSERT IGNORE INTO `discord_bot`.`module_builds_builds`
 		'Jenks',
 		'Jenks Assa PvM Builds: Dual Dagger',
 		'',
-		'Thief:\n- Double Attack 10\n- Improve Dodge 10\n- Envenom 6 (10)\n- Detoxify 1\n- Steal 10\n- Hiding 2 (8)\n\nAssassin\n- Right Hand Mastery 5\n- Left Hand Mastery 5\n- Cloaking 3 (10)\n- 41 bzw. 34 Restpunkte frei zu verteilen',
+		'__Thief:__\n- Double Attack 10\n- Improve Dodge 10\n- Envenom 6 (10)\n- Detoxify 1\n- Steal 10\n- Hiding 2 (8)\n\n__Assassin__\n- Right Hand Mastery 5\n- Left Hand Mastery 5\n- Cloaking 3 (10)\n- 41 bzw. 34 Restpunkte frei zu verteilen',
 		'Str: 90-120\nAgi: 90-110\nVit: 1 - 30\nInt: 1-2\nDex: 32/42\nLuk: 1\n',
 		'',
 		12);
