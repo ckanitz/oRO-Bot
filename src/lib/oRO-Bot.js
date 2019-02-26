@@ -4,6 +4,9 @@
  * @type {oROBot}
  */
 
+// Import functions, configs etc.
+const { token } = require( '../config.json' );
+
 /**
  * oROBot class
  */
@@ -21,8 +24,17 @@ class oROBot {
 
 		this.createModules();
 		this.handleEvents();
+		this.handleLogin();
+	}
 
-		client.login( token );
+	/**
+	 * HandleLogin function.
+	 *
+	 * @return {void} connects the bot to discord.
+	 */
+	handleLogin() {
+		console.log( 'oRO-Bot: Login to Discord...' );
+		this.client.login( token );
 	}
 
 	/**
@@ -32,8 +44,10 @@ class oROBot {
 	 * @param  {[type]} client [description]
 	 * @return {[type]}        [description]
 	 */
-	handleEvents( client ) {
-		client.on( 'ready', () => {
+	handleEvents() {
+		console.log( 'oRO-Bot: creating eventlistener...' );
+
+		this.client.on( 'ready', () => {
 			console.log( 'oRO-Bot is up and ready' );
 		} );
 	}
@@ -44,6 +58,7 @@ class oROBot {
 	 * @return {void} Creates modules dependig on config.modules.
 	 */
 	createModules() {
+		console.log( 'oRO-Bot: creating modules:', this.modules );
 		// Loop through the config.modules array.
 		this.modules.forEach( ( moduleName ) => {
 			const Mod = require( `../modules/${ moduleName }/module.js` );

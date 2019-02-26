@@ -10,13 +10,13 @@
 // Import functions, configs etc.
 const { version }   = require( '../../../package.json' );
 const { getDbData } = require( '../../lib/db.js' );
-const Modules       = require( '../modules.js' );
+const Module        = require( '../module.js' );
 const { command }   = require( './builds.json' );
 
 /**
  * Builds-Module Class
  */
-class Builds extends Modules {
+class Builds extends Module {
 	/**
 	 * Constructor.
 	 *
@@ -40,6 +40,7 @@ class Builds extends Modules {
 	onMessage( message, messageCommand, args ) {
 		// Handle message if checks don't return false.
 		if ( command === messageCommand ) {
+			console.log( `mod-help: $CMD ${ messageCommand } ${ args } EXEC BY @${ message.author.username }#${ message.author.discriminator }` );
 			this.handleMessage( message, args );
 		}
 	}

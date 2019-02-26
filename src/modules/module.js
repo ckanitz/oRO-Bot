@@ -11,7 +11,7 @@ const { validateMessage } = require( '../lib/helper.js' );
 /**
  * Modules Base Class.
  */
-class Modules {
+class Module {
 	/**
 	 * Constructor.
 	 *
@@ -43,4 +43,4 @@ class Modules {
 	}
 }
 
-module.exports = Modules;
+module.exports = Module;

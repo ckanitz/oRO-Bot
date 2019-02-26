@@ -10,13 +10,13 @@
 // Import functions, configs etc.
 const { version }         = require( '../../../package.json' );
 const { prefix }          = require( '../../config.json' );
-const Modules             = require( '../modules.js' );
+const Module              = require( '../module.js' );
 const { command }         = require( './help.json' );
 
 /**
  * Help-Module Class
  */
-class Help extends Modules {
+class Help extends Module {
 	/**
 	 * Constructor.
 	 *
@@ -40,6 +40,7 @@ class Help extends Modules {
 	onMessage( message, messageCommand, args ) {
 		// Handle message if checks don't return false.
 		if ( command === messageCommand ) {
+			console.log( `mod-help: $CMD ${ messageCommand } ${ args } EXEC BY @${ message.author.username }#${ message.author.discriminator }` );
 			this.handleMessage( message, args );
 		}
 	}
