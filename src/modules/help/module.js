@@ -42,6 +42,7 @@ class Help extends Module {
 		if ( command === messageCommand ) {
 			console.log( `mod-help: $CMD ${ messageCommand } ${ args } EXEC BY @${ message.author.username }#${ message.author.discriminator }` );
 			this.handleMessage( message, args );
+			console.log( args );
 		}
 	}
 
@@ -56,7 +57,7 @@ class Help extends Module {
 		// prepare the response.
 		let response = {
 			color: 0x00ff6e,
-			title: "__oRO Bot Help__",
+			title: "__**oRO Bot Help**__",
 			fields: [],
 			footer: {
 				text: `oRO-Bot v${ version }`

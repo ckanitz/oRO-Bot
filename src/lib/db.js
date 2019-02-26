@@ -10,8 +10,17 @@ const connection = mysql.createConnection( {
 
 module.exports = {
 	getDbData( query ) {
-		connection.query( query, ( error, results, fields ) => {
-			console.log( error, results, fields );
-		} );
+		console.log( 'lib-db: executing SELECT query' );
+		return new Promise(
+			( resolve, reject ) => {
+				connection.query( query, ( error, results, fields ) => {
+					if ( null === error ) {
+						resolve( results );
+					} else {
+						reject( error );
+					}
+				} );
+			}
+		);
 	}
 }
