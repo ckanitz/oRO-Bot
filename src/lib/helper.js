@@ -8,7 +8,7 @@ module.exports = {
 	 * @param  {Object} message  The message object retreived from discord.
 	 * @return {false|Object}    False if no valid command, command and args if valid.
 	 */
-	validateMessage: ( message ) => {
+	validateMessage: ( message, withPrefix = true ) => {
 		// Ignore other bots.
 		if ( message.author.bot ) {
 			const command = false;
@@ -17,7 +17,7 @@ module.exports = {
 		};
 
 		// Ignore messages without set prefix.
-		if ( message.content.indexOf( prefix ) !== 0 ) {
+		if ( withPrefix && message.content.indexOf( prefix ) !== 0 ) {
 			const command = false;
 			const args    = false;
 			return { command, args };
