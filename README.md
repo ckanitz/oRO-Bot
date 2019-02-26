@@ -2,12 +2,12 @@
 A simple Discord-Bot to handle information received from [originsro.org](https://originsro.org/) API and other stuff.
 
 # Purpose
-Es6bot was designed as a pure ES6 JavaScript replacement for BooBot in the Egee.io Discord server. The scope of Es6bot was later paired down to be a very simple self-hosted Discord bot.
+oRO-Bot is designed as a discord bot providing commands helping to organize guild stuff and get info from originsRO-Database/API.
 
-Es6bot's current feature set includes:
+oRO-Bot's current feature set includes:
 
 * **!help** command - show available commands
-* **!build** command - shows available character builds
+* **!build** command (WIP) - shows available character builds 
 
 # Architecture
 oRO-Bot is a modular discord bot.
