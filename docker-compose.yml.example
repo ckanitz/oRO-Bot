@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   db:
-    image: mysql:5.7
+    image: mysql
     restart: always
     environment:
       MYSQL_DATABASE: 'discord_bot'
@@ -20,6 +20,12 @@ services:
       # Where our data will be persisted
     volumes:
       - discord_bot:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8080:8080'
 # Names our volume
 volumes:
   discord_bot:
