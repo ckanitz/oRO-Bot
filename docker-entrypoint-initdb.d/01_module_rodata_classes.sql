@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS `discord_bot`.`module_rodata_classes` (	`id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `discord_bot`.`module_rodata_classes` (
+	`id` INT NOT NULL,
 	`slug` VARCHAR(45) NULL,
 	`name` VARCHAR(45) NULL,
 	PRIMARY KEY (`id`),
