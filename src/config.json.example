@@ -9,4 +9,7 @@
 		"password" : "DBUSERPASSWORD",
 		"database" : "discord_bot"
 	}
+	"apiKeys": {
+		"imgur": "CLIENT_ID"
+	}
 }
