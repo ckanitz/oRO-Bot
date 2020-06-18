@@ -66,5 +66,19 @@ module.exports = {
 		});
 
 		return commands;
+	},
+
+	/**
+	 * Format a given number to a formated price string
+	 *
+	 * Example:
+	 * - 123456789 => 123.456.789
+	 * - 568695346 => 568.695.346z
+	 * @param  {Number} number        The price to format.
+	 * @param  {String} [currency=''] Optional currency suffix.
+	 * @return {String}               Formated price string.
+	 */
+	formatPrice(number, currency = '') {
+		return Math.round(number).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + currency;
 	}
 };

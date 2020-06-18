@@ -15,11 +15,13 @@ const sharp = require('sharp');
 
 const { findLastIndex, isEmpty } = require('lodash');
 
+const { formatPrice } = require('../../lib/helper.js');
 const { prefix } = require('../../config.json');
 const { version } = require('../../../package.json');
 
 const config = require('./config.json');
 const Module = require('../module.js');
+const MapBuilder = require('./mapBuilder.js');
 
 /**
  * Market-Module Class
@@ -59,23 +61,23 @@ class Market extends Module {
 		axios.get(`${avg}?itemId=${itemId}&itemName=${itemName}`)
 			.then(function ({data}) {
 				// handle success
-				const min7days = Math.round(data['history-min-7days']).toString();
-				const max7days = Math.round(data['history-max-7days']).toString();
-				const avg7days = Math.round(data['history-avg-7days']).toString();
-				const min30days = Math.round(data['history-min-30days']).toString();
-				const max30days = Math.round(data['history-max-30days']).toString();
-				const avg30days = Math.round(data['history-avg-30days']).toString();
+				const min7days = formatPrice(data['history-min-7days'], 'z');
+				const max7days = formatPrice(data['history-max-7days'], 'z');
+				const avg7days = formatPrice(data['history-avg-7days'], 'z');
+				const min30days = formatPrice(data['history-min-30days'], 'z');
+				const max30days = formatPrice(data['history-max-30days'], 'z');
+				const avg30days = formatPrice(data['history-avg-30days'], 'z');
 
 				const input = itemName.length ? itemName : itemId;
 
 				response.title = `AVG Price: __**${data.searchinfo}**__ (${input})- oRO Market`;
 				response.fields.push( {
 					name: 'Last 7 days:',
-					value: `Min: ${min7days}z\n**øAvg: ${avg7days}z**\nMax: ${max7days}z`,
+					value: `Min: ${min7days}\n**ø Avg: ${avg7days}**\nMax: ${max7days}`,
 				} );
 				response.fields.push( {
 					name: 'Last 30 days:',
-					value: `Min: ${min30days}z\n**øAvg: ${avg30days}**z\nMax: ${max30days}z`,
+					value: `Min: ${min30days}\n**ø Avg: ${avg30days}**\nMax: ${max30days}`,
 				} );
 			})
 			.catch(function (error) {
@@ -107,15 +109,15 @@ class Market extends Module {
 			.then(({data}) => {
 				// handle success
 				const label = itemName.length ? itemName : itemId;
-				const avg7days = this.formatPrice(data['history-avg-7days']);
-				const avg30days = this.formatPrice(data['history-avg-30days']);
+				const avg7days = formatPrice(data['history-avg-7days'], 'z');
+				const avg30days = formatPrice(data['history-avg-30days'], 'z');
 				const avgItemname = data.searchinfo;
 
 				response.title = `Who Sells: __**${label}**__ - oRO Market`;
 
 				response.fields.push({
 					name: `**Average Price**`,
-					value: `**ø 7 days: ${avg7days}z**\nø 30 days: ${avg30days}z)`,
+					value: `**ø 7 days: ${avg7days}z**\nø 30 days: ${avg30days})`,
 				});
 
 				axios.get(`${history}?itemId=${itemId}&itemName=${itemName}`)
@@ -130,19 +132,22 @@ class Market extends Module {
 							const itemTitle = `**${m.item.name}${m.item.slots > 0 ? '[' + m.item.slots + ']' : '' }** (${m.item.itemID})`;
 							const navshop = `\n\`\`\`fix\n@navshop ${m.vendorName}\`\`\``;
 							const positionInfo = `**${m.positionMap}** ${m.positionX}/${m.positionY}`;
-							const price = `**${this.formatPrice(m.price)}z**`;
+							const price = `**${formatPrice(m.price, 'z')}**`;
 
 							let mapUrl = false;
 
 							if ( i === maxIndex && m.positionMap === 'prontera' ) {
-								mapUrl = await this.getMapImageUrl({
+								const mb = new MapBuilder({
 									map: m.positionMap,
 									x: m.positionX,
 									y: m.positionY,
 								});
+								const mapUrl = await mb.getMapImageUrl();
 								response.image.url = mapUrl;
 							}
 
+							// Maybe duplicate the cheapest merchant to the end to
+							// provide a better view on mobile.
 							response.fields.push({
 								name: `**[${m.shopName}]**`,
 								value: `Item: ${itemTitle}\nPrice: ${price}\nPosition: ${positionInfo}\n${navshop}`,
@@ -175,138 +180,6 @@ class Market extends Module {
 
 		return { itemId, itemName };
 	}
-
-	formatPrice(number) {
-		return Math.round(number).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-	}
-
-	getMapImageUrl(posInfo) {
-		return new Promise( async (resolve, reject) => {
-			const dir = path.dirname(__filename);
-			const filename = `${posInfo.map}_${posInfo.x}_${posInfo.y}.png`;
-
-			if (typeof this.mapCache[`${dir}/cache/${filename}`] !== 'undefined') {
-				resolve(this.mapCache[`${dir}/cache/${filename}`]);
-			} else {
-				const imgUrl = await this.createPinMap(posInfo, dir, filename);
-				// //const imgurUrl = await this.uploadImgur(pinmapPath);
-				// console.log({pinmapPath});
-				resolve(imgUrl);
-			}
-		});
-	}
-
-	createPinMap(posInfo, dir, filename) {
-		const map = `${dir}/maps/${posInfo.map}.png`;
-		const pin = { path: `${dir}/assets/pin.png`, width: 25, height: 34 };
-
-		return new Promise((resolve, reject) => {
-			const image = sharp(map);
-
-			image.metadata()
-				.then((metadata) => {
-					const filepath = `${dir}/cache/${filename}`;
-					return image.composite([{
-						input: pin.path,
-						left: Math.round(posInfo.x - pin.width / 2),
-						top: Math.round(metadata.height - posInfo.y - pin.height),
-						gravity: 'south',
-					}])
-					.toFile(`${dir}/cache/${filename}`, (err, info) => {
-						if (!err) {
-							console.log( 'cached: ', {info, filename});
-
-							fs.readFile(filepath, (err, data) => {
-								console.log(err,data, filepath);
-								if (!err) {
-									axios({
-										'method': 'POST',
-										'url': 'https://api.imgur.com/3/upload',
-										'headers': {
-											'Authorization': 'Client-ID 8c3e45c908a924f',
-											'Content-Type': 'image/png',
-										},
-										data
-									}).then(({data}) => {
-										this.mapCache[filepath] = data.data.link;
-										console.log(data, data.data, data.data.link);
-										resolve(data.data.link);
-									}).catch((err)  =>{
-										console.log(err);
-									});
-								} else {
-									console.log(err);
-								}
-							});
-
-							//resolve(filepath);
-						} else {
-							console.log(err);
-						}
-					});
-			});
-		});
-	}
-
-	uploadImgur(filepath) {
-		return new Promise((resolve, reject) => {
-			fs.readFile(filepath, (err, data) => {
-				if (!err) {
-					axios({
-						'method': 'POST',
-						'url': 'https://api.imgur.com/3/upload',
-						'headers': {
-							'Authorization': 'Client-ID 8c3e45c908a924f',
-							'Content-Type': 'image/png',
-						},
-						data
-					}).then(function({data}) {
-						this.mapCache[filepath] = data.data.link;
-						resolve(data.data.link);
-					}).catch(function(err) {
-						console.log(err.data);
-					});
-				} else {
-					console.log(err);
-				}
-			});
-		});
-	}
-
-	// toCache(key, value) {
-	// 	const dir = path.dirname(__filename);
-	// 	const filename = `${dir}/cache/map.cache`;
-	//
-	// 	fs.readFile(filename, read(err, data) => {
-	// 		if (err) {
-	// 			throw err;
-	// 		}
-	// 		const cache = JSON.parse(data);
-	// 		cache[key] = value;
-	// 		console.log(cache,key,value);
-	//
-	// 		fs.writeFile(filename, JSON.stringify(cache), (err) => {
-	// 			if (err) return console.log(err);
-	// 		});
-	// 	});
-	// }
-	//
-	// fromCache(key) {
-	// 	return new Promise((resolve, reject) => {
-	// 		const dir = path.dirname(__filename);
-	// 		const filename = `${dir}/cache/map.cache`;
-	//
-	// 		fs.readFile(filename, read(err, data) => {
-	// 			if (err) {
-	// 				throw err;
-	// 			}
-	// 			const cache = JSON.parse(data);
-	// 			const result = cache[key]
-	// 
-	// 			resolve();
-	// 		});
-	// 	});
-	// }
 }
 
 module.exports = Market;

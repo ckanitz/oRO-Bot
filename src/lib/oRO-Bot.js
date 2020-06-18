@@ -72,7 +72,6 @@ class oROBot {
 		this.client.on( 'message', async message => {
 			// Apply some checks for commands.
 			const { command, args } = validateMessage( message );
-			console.log({command,args,}, this.commands)
 
 			if (!!command && typeof this.commands[command] !== 'undefined' ) {
 				const cmd = this.commands[command];
