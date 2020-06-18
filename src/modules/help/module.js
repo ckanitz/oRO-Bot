@@ -8,10 +8,11 @@
  */
 
 // Import functions, configs etc.
-const { version }         = require( '../../../package.json' );
-const { prefix }          = require( '../../config.json' );
-const Module              = require( '../module.js' );
-const { command }         = require( './help.json' );
+const { forEach } = require('lodash');
+const { version } = require('../../../package.json');
+const { prefix } = require('../../config.json');
+const Module = require('../module.js');
+const config = require('./config.json');
 
 /**
  * Help-Module Class
@@ -20,42 +21,24 @@ class Help extends Module {
 	/**
 	 * Constructor.
 	 *
-	 * @param {Object} client  the discordjs client.
 	 * @param {Array} modules  array of all enabled modules.
 	 */
-	constructor( client, modules ) {
-		super( client );
-		this.client  = client;
+	constructor(modules) {
+		super(modules);
+		this.config = config;
 		this.modules = modules;
 	}
 
 	/**
 	 * OnMessage function.
 	 *
+	 * @param  {Array}  args           The arguments sent by someone with the command.
 	 * @param  {Object} message        The message object received from discord.
-	 * @param  {String} messageCommand The command sent by someone.
-	 * @param  {Array} args            The arguments sent by someone with the command.
 	 * @return {void}                  Do stuff depending on args.
 	 */
-	onMessage( message, messageCommand, args ) {
-		// Handle message if checks don't return false.
-		if ( command === messageCommand ) {
-			console.log( `mod-help: $CMD ${ messageCommand } ${ args } EXEC BY @${ message.author.username }#${ message.author.discriminator }` );
-			this.handleMessage( message, args );
-			console.log( args );
-		}
-	}
-
-	/**
-	 * HandleMessage function.
-	 *
-	 * @param  {Object} message The message object received from discord.
-	 * @param  {Array}  args    Array of args send with the command message.
-	 * @return {void}           Do stuff depending on args.
-	 */
-	handleMessage( message, args ) {
+	onHelp(args, message) {
 		// prepare the response.
-		let response = {
+		const response = {
 			color: 0x00ff6e,
 			title: "__**oRO Bot Help**__",
 			fields: [],
@@ -77,27 +60,29 @@ class Help extends Module {
 			// Loop through the modules.
 			this.modules.forEach( ( module ) => {
 				// Get the modules info.
-				const moduleHelp = require( `../${ module }/${ module }.json` );
+				const config = require( `../${ module }/config.json` );
 
-				// Append content.
-				availableCommands += `**${ prefix }${ moduleHelp.command }${ moduleHelp.args }** - ${ moduleHelp.description }\n`;
+				forEach(config.commands, (info, cmd) => {
+					// Append content.
+					availableCommands += `**${ prefix }${ cmd } ${ info.args ? info.args : '' }** - ${ info.description }\n`;
+				});
 			} );
 
 			// Push a new field with available commands.
 			response.fields.push( {
-				name: 'Verfügbare Befehle',
+				name: 'Available commands',
 				value: availableCommands
 			} );
 		} else {
 			// Push a field with a response.
 			response.fields.push( {
-				name: 'Verfügbare Befehle',
-				value: 'aktuell keine Befehle verfügbar, sorry :('
+				name: 'Available commands',
+				value: 'no commands available, sorry :('
 			} );
 		}
 
 		// Send the message.
-		message.channel.send( { embed: response } );
+		message.channel.send({ embed: response });
 	}
 }
 

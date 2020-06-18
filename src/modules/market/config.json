@@ -1,0 +1,17 @@
+{
+	"name": "Market",
+	"slug": "market",
+	"description": "Find venders of a specific item.",
+	"commands": {
+		"avg": {
+			"callback": "onAvg",
+			"args": "{item name|itemID}",
+			"description": "Search for an item's avg price on the oRO-Market"
+		},
+		"ws": {
+			"callback": "onWhoSells",
+			"args": "{item name|itemID}",
+			"description": "Search for an item on the oRO-Market"
+		}
+	}
+}

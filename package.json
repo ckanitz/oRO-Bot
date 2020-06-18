@@ -5,14 +5,21 @@
 	"main": "src/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"bot": "npm install && docker-compose up -d && node src/index.js"
+		"bot": "npm install && docker-compose up -d && node src/index.js",
+		"market": "node src/index.js --help --market"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"discord.js": "^11.4.2",
-		"lodash": "^4.17.11",
-		"mysql": "^2.16.0"
+		"discord.js": "^11.6.4",
+		"lodash": "^4.17.15",
+		"mysql": "^2.18.1"
+	},
+	"devDependencies": {
+		"axios": "^0.19.2",
+		"gm": "^1.23.1",
+		"path": "^0.12.7",
+		"sharp": "^0.25.4"
 	}
 }
