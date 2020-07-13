@@ -37,9 +37,7 @@ class MapBuilder {
 	 */
 	getMapImageUrl() {
 		return new Promise(async (resolve, reject) => {
-			const cache = await this.cacheGet(`${this.map.path}/${this.map.filename}`);
-
-			console.log(!!cache);
+			const cache = false;//await this.cacheGet(this.map.filename);
 
 			if (!!cache) {
 				resolve(cache);
@@ -73,9 +71,9 @@ class MapBuilder {
 					const imageUrl = await uploader.getImageUrl();
 					response = imageUrl;
 
-					if (imageUrl) {
-						this.cacheSet(filepath,imageUrl);
-					}
+					// if (imageUrl) {
+					// 	this.cacheSet(this.map.filename,imageUrl);
+					// }
 				}
 			} else {
 				console.log(`Mapfile ${this.pos.map}.png does not exist in ${dir}/maps/`);
@@ -104,6 +102,7 @@ class MapBuilder {
 						console.log('Something went wrong while reading the map.cache', err);
 						reject(err);
 					} else {
+						console.log(data);
 						const cache = JSON.parse(data);
 						let response = false;
 

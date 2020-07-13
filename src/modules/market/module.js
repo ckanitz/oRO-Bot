@@ -54,7 +54,7 @@ class Market extends Module {
 			title: "__**oRO Market AVG**__",
 			fields: [],
 			footer: {
-				text: `oRO-Bot v${ version }`
+				text: `oRO-Bot v${ version } - API by @derMob`
 			},
 		};
 
@@ -68,9 +68,9 @@ class Market extends Module {
 				const max30days = formatPrice(data['history-max-30days'], 'z');
 				const avg30days = formatPrice(data['history-avg-30days'], 'z');
 
-				const input = itemName.length ? itemName : itemId;
+				const input = itemName.length ? null : `(${itemId}) `;
 
-				response.title = `AVG Price: __**${data.searchinfo}**__ (${input})- oRO Market`;
+				response.title = `AVG Price: __**${data.searchinfo}**__ ${input}- oRO Market`;
 				response.fields.push( {
 					name: 'Last 7 days:',
 					value: `Min: ${min7days}\n**ø Avg: ${avg7days}**\nMax: ${max7days}`,
@@ -101,7 +101,7 @@ class Market extends Module {
 				url: '',
 			},
 			footer: {
-				text: `oRO-Bot v${ version }`
+				text: `oRO-Bot v${ version } - API by @derMob`
 			}
 		};
 
@@ -109,34 +109,60 @@ class Market extends Module {
 			.then(({data}) => {
 				// handle success
 				const label = itemName.length ? itemName : itemId;
-				const avg7days = formatPrice(data['history-avg-7days'], 'z');
-				const avg30days = formatPrice(data['history-avg-30days'], 'z');
+				const avg7days = { val: data['history-avg-7days'], formatted: formatPrice(data['history-avg-7days'], 'z') };
+				const avg30days = { val: data['history-avg-30days'], formatted: formatPrice(data['history-avg-30days'], 'z') };
 				const avgItemname = data.searchinfo;
 
-				response.title = `Who Sells: __**${label}**__ - oRO Market`;
+				response.title = `Who Sells: __**${avgItemname}**__ - oRO Market`;
 
 				response.fields.push({
 					name: `**Average Price**`,
-					value: `**ø 7 days: ${avg7days}z**\nø 30 days: ${avg30days})`,
+					value: `**ø 7 days: ${avg7days.formatted}**\nø 30 days: ${avg30days.formatted})`,
 				});
 
+				console.log(`fetching ${history}?itemId=${itemId}&itemName=${itemName}`);
+
 				axios.get(`${history}?itemId=${itemId}&itemName=${itemName}`)
-					.then(async ({data}) => {
+					.then(async (resp) => {
+						const { data } = resp;
 						// handle success
 						const activeMerchLastIndex = findLastIndex(data, function(m) { return m.isCurrentShop });
-						const maxIndex = activeMerchLastIndex < 3 ? activeMerchLastIndex : 3;
+						const maxIndex = activeMerchLastIndex < 2 ? activeMerchLastIndex : 2;
 
-						for(let i = maxIndex; i > 0; i--) {
+						// Bail out if we got no shopdata.
+						if ( data.length <= 0 || activeMerchLastIndex < 0 ) {
+							response.fields.push({
+								name: '**SOLD OUT**',
+								value: 'not for sale right now\ngotta go farm, boi!',
+							});
+
+							return;
+						}
+
+						let cheapest = {};
+
+						for(let i = maxIndex; i >= 0; i--) {
+							console.log({i,maxIndex});
 							// Merchant.
 							const m = data[activeMerchLastIndex - (maxIndex - i)];
+							// **Knife[4]** (1234)
 							const itemTitle = `**${m.item.name}${m.item.slots > 0 ? '[' + m.item.slots + ']' : '' }** (${m.item.itemID})`;
-							const navshop = `\n\`\`\`fix\n@navshop ${m.vendorName}\`\`\``;
+							const price = `**${formatPrice(m.price, 'z')}** (${formatPrice(m.price - avg7days.val, 'z')} ø 7d)`;
+							// **prontera** 12/34
 							const positionInfo = `**${m.positionMap}** ${m.positionX}/${m.positionY}`;
-							const price = `**${formatPrice(m.price, 'z')}**`;
+							const navshop = `\n\`\`\`fix\n@navshop ${m.vendorName}\`\`\``;
+
+							const field = {
+								name: `**[${m.shopName}]**`,
+								value: `Item: ${itemTitle}\n
+										Price: ${price}\n
+										Position: ${positionInfo}
+										${navshop}`,
+							};
 
 							let mapUrl = false;
 
-							if ( i === maxIndex && m.positionMap === 'prontera' ) {
+							if ( i === maxIndex ) {
 								const mb = new MapBuilder({
 									map: m.positionMap,
 									x: m.positionX,
@@ -144,21 +170,27 @@ class Market extends Module {
 								});
 								const mapUrl = await mb.getMapImageUrl();
 								response.image.url = mapUrl;
+								cheapest = field;
 							}
 
 							// Maybe duplicate the cheapest merchant to the end to
 							// provide a better view on mobile.
-							response.fields.push({
-								name: `**[${m.shopName}]**`,
-								value: `Item: ${itemTitle}\nPrice: ${price}\nPosition: ${positionInfo}\n${navshop}`,
-							});
+							response.fields.push(field);
 						}
+
+						response.fields.push({
+							name: '### ### ###',
+							value: '**Best Offer:**',
+						});
+
+						response.fields.push(cheapest);
 					})
 					.catch(function (error) {
 						// handle error
 						console.log({error});
 					})
 					.finally(function () {
+						console.log(response);
 						message.channel.send({ embed: response });
 					});
 			})

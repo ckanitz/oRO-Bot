@@ -31,8 +31,9 @@ class ImgurUploader {
 						'Content-Type': 'image/png',
 					},
 					data
-				}).then(({data}) => {
-					resolve(data.data.link);
+				}).then((res) => {
+					console.log('imgur res:', res);
+					resolve(res.data.data.link);
 				}).catch((err)  =>{
 					console.log('Upload to imgur failed', err);
 					reject(err);
