@@ -2,7 +2,7 @@ const { isEmpty } = require('lodash');
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
-const ImgurUploader = require('../../lib/ImgurUploader.js');
+const ImgurUploader = require('../../lib/imgurUploader.js');
 
 class MapBuilder {
 	/**
