@@ -131,12 +131,15 @@ class Mvptimer extends Module {
 		// Send the message.
 		// Testrole
 		message.channel
-			.send(`${format(minspawnDate, 'HH:mm:ss')} <@&797791785048604692>`)
+			.send(`${format(minspawnDate, 'HH:mm:ss')} <@&795564364362940426>`)
 			.then( msg => msg
 							.react('👍')
 							.then( () => msg.react('🤌') ) // :pinched_fingers:
 							.then( () => msg.react('👎') )
 			);
+
+		// test
+		// <@&797791785048604692>
 
 		// thonk aktive mvpler
 		// message.send(`MINSPAWN <@&795564364362940426>`);
