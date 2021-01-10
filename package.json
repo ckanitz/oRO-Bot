@@ -6,12 +6,14 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"bot": "npm install && docker-compose up -d && node src/index.js",
-		"market": "node src/index.js --help --market"
+		"market": "node src/index.js --help --market",
+		"mvptimer": "node src/index.js"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"date-fns": "^2.16.1",
 		"discord.js": "^11.6.4",
 		"lodash": "^4.17.15",
 		"mysql": "^2.18.1"
