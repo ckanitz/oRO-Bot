@@ -47,11 +47,11 @@ class Mvptimer extends Module {
 		// Get the spawninfo of the MVP.
 		let killtime = null;
 		let spawninfo = null;
+		let reminder = null;
 
 		const isMvp = 'undefined' !== typeof MVP_SPAWNTIMES_IN_MIN[args[0].toLowerCase()];
 		const isMiniBoss = 'undefined' !== typeof MINI_BOSS_SPAWNTIMES_IN_MIN[args[0].toLowerCase()]
 
-		const reminder = null;
 
 		if ( 'undefined' !== typeof args[0] ) {
 			if ( 'list' === args[0] ) {
