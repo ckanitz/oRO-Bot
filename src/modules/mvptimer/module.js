@@ -18,8 +18,8 @@ const bossInfo = require('./boss-info.json');
 
 const MVP_SPAWNTIMES_IN_MIN = bossInfo.mvps;
 const MINI_BOSS_SPAWNTIMES_IN_MIN = bossInfo.miniBosses;
-//const PING_ROLE = '<@&795564364362940426>'; // Thonk
-const PING_ROLE = '<@&797791785048604692>'; // Test
+const PING_ROLE = '<@&795564364362940426>'; // Thonk
+//const PING_ROLE = '<@&797791785048604692>'; // Test
 
 /**
  * Mvptimer-Module Class
@@ -50,6 +50,8 @@ class Mvptimer extends Module {
 
 		const isMvp = 'undefined' !== typeof MVP_SPAWNTIMES_IN_MIN[args[0].toLowerCase()];
 		const isMiniBoss = 'undefined' !== typeof MINI_BOSS_SPAWNTIMES_IN_MIN[args[0].toLowerCase()]
+
+		const reminder = null;
 
 		if ( 'undefined' !== typeof args[0] ) {
 			if ( 'list' === args[0] ) {
@@ -119,6 +121,11 @@ class Mvptimer extends Module {
 			return;
 		}
 
+		// get reminder
+		if ( 'undefined' !== typeof args[2] ) {
+			reminder = args[2];
+		}
+
 		// prepare the response.
 		const response = {
 			color: 0x00ff6e,
@@ -168,18 +175,19 @@ class Mvptimer extends Module {
 		}
 
 		// Send the message.
-		message.channel
-			.send(`${format(minspawnDate, 'HH:mm:ss')} ${PING_ROLE}`)
-			.then( msg => msg
-							.react('👍')
-							.then( () => msg.react('🤏') ) // :pinched_hand:
-							.then( () => msg.react('👎') )
-			);
-
+		if ( reminder === 'ping' || reminder === 'channel' ) {
+			message.channel
+				.send(`${format(minspawnDate, 'HH:mm:ss')} ${PING_ROLE}`)
+				.then( msg => msg
+								.react('👍')
+								.then( () => msg.react('🤏') ) // :pinched_hand:
+								.then( () => msg.react('👎') )
+				);
+		}
 		message.channel.send({ embed: response });
 
 		// Check for reminder arg.
-		if ( typeof args[2] !== 'undefined' ) {
+		if ( null !== reminder ) {
 			const delay = differenceInMilliseconds( sub( minspawnDate, { minutes: 5 } ), new Date() );
 
 			switch ( args[2] ) {
