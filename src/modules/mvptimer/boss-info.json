@@ -163,13 +163,13 @@
 		},
 		"phreeoni": {
 			"name": "Phreeoni",
-			"fixed": 60,
+			"fixed": 120,
 			"flexible": [10],
 			"map": "moc_fild17"
 		},
 		"phreeoniant": {
 			"name": "Phreeoni",
-			"fixed": 60,
+			"fixed": 120,
 			"flexible": [10],
 			"map": "moc_fild15"
 		},
