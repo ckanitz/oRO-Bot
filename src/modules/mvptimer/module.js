@@ -9,7 +9,7 @@
 
 // Import functions, configs etc.
 const { forEach } = require('lodash');
-const { add, format, parseISO, toDate } = require('date-fns');
+const { add, differenceInMilliseconds, format, parseISO, sub, toDate } = require('date-fns');
 const { version } = require('../../../package.json');
 const { prefix } = require('../../config.json');
 const Module = require('../module.js');
@@ -18,6 +18,8 @@ const bossInfo = require('./boss-info.json');
 
 const MVP_SPAWNTIMES_IN_MIN = bossInfo.mvps;
 const MINI_BOSS_SPAWNTIMES_IN_MIN = bossInfo.miniBosses;
+//const PING_ROLE = '<@&795564364362940426>'; // Thonk
+const PING_ROLE = '<@&797791785048604692>'; // Test
 
 /**
  * Mvptimer-Module Class
@@ -49,7 +51,30 @@ class Mvptimer extends Module {
 		const isMvp = 'undefined' !== typeof MVP_SPAWNTIMES_IN_MIN[args[0].toLowerCase()];
 		const isMiniBoss = 'undefined' !== typeof MINI_BOSS_SPAWNTIMES_IN_MIN[args[0].toLowerCase()]
 
-		if ( 'undefined' !== typeof args[0]	&& ( ! isMvp || ! isMiniBoss ) ) {
+		if ( 'undefined' !== typeof args[0] ) {
+			if ( 'list' === args[0] ) {
+				// prepare the response.
+				const response = {
+					color: 0x006eff,
+					title: `__**MVP/Mini Boss List:**__`,
+					fields: [
+						{
+							name: 'Known MVPs:',
+							value: this.getAllMonsters(MVP_SPAWNTIMES_IN_MIN),
+						},
+						{
+							name: 'Known Mini Bosses:',
+							value: this.getAllMonsters(MINI_BOSS_SPAWNTIMES_IN_MIN),
+						},
+					],
+					footer: {
+						text: `oRO-Bot v${ version }`
+					}
+				};
+				message.channel.send({embed: response});
+				return;
+			}
+
 			if ( isMvp ) {
 				spawninfo = MVP_SPAWNTIMES_IN_MIN[args[0]];
 			} else {
@@ -111,6 +136,7 @@ class Mvptimer extends Module {
 		} );
 
 		const minspawnDate = add(killDate, {minutes: spawninfo.fixed});
+		const spawntimes = { minspawnDate, maxspawnDate: '' };
 
 		response.fields.push( {
 			name: 'Minimum Spawntime',
@@ -120,6 +146,7 @@ class Mvptimer extends Module {
 		if ( spawninfo.flexible.length > 0 ) {
 			let spawnResponseValue = '';
 			let tmpDate = minspawnDate;
+
 			for ( let i = 0; i < spawninfo.flexible.length; i++ ) {
 				tmpDate = add( tmpDate, { minutes: spawninfo.flexible[i] } );
 				spawnResponseValue += format(
@@ -136,23 +163,43 @@ class Mvptimer extends Module {
 				name: 'Flexible Spawntime',
 				value: spawnResponseValue,
 			} );
+
+			spawntimes.maxspawnDate = tmpDate;
 		}
 
 		// Send the message.
 		message.channel
-			.send(`${format(minspawnDate, 'HH:mm:ss')} <@&795564364362940426>`)
+			.send(`${format(minspawnDate, 'HH:mm:ss')} ${PING_ROLE}`)
 			.then( msg => msg
 							.react('👍')
 							.then( () => msg.react('🤏') ) // :pinched_hand:
 							.then( () => msg.react('👎') )
 			);
 
-		// test
-		// <@&797791785048604692>
-
-		// thonk aktive mvpler
-		// message.send(`MINSPAWN <@&795564364362940426>`);
 		message.channel.send({ embed: response });
+
+		// Check for reminder arg.
+		if ( typeof args[2] !== 'undefined' ) {
+			const delay = differenceInMilliseconds( sub( minspawnDate, { minutes: 5 } ), new Date() );
+
+			switch ( args[2] ) {
+				case 'pm':
+					setTimeout(() => {
+						const reminderResponse = this.getChannelReminderMessage( message, spawninfo, spawntimes );
+						message.author.send({ embed: reminderResponse });
+					}, delay);
+					break;
+				case 'channel':
+					setTimeout(() => {
+						const reminderResponse = this.getChannelReminderMessage( message, spawninfo, spawntimes );
+						message.channel.send(PING_ROLE)
+						message.channel.send({ embed: reminderResponse });
+					}, delay);
+					break;
+				default:
+					return;
+			}
+		}
 	}
 
 	sendError( message, fields ) {
@@ -166,6 +213,30 @@ class Mvptimer extends Module {
 			}
 		};
 		message.channel.send({ embed: response });
+	}
+
+	getChannelReminderMessage( message, spawninfo, spawntimes ) {
+		const minspawntime = format( spawntimes.minspawnDate, 'HH:mm:ss' );
+		const maxspawntime = format( spawntimes.maxspawnDate, 'HH:mm:ss' );
+		// prepare the response.
+		const response = {
+			color: 0x00ff6e,
+			title: `__**MVP/Boss-Reminder: ${spawninfo.name}**__`,
+			fields: [
+				{
+					name: 'Next Spawn in **5** Minutes!',
+					value: `${spawninfo.name} at ${spawninfo.map}`,
+				},
+				{
+					name: 'Spawntime:',
+					value: `${minspawntime} ~ ${maxspawntime}`,
+				}
+			],
+			footer: {
+				text: `oRO-Bot v${ version }`
+			}
+		};
+		return response;
 	}
 
 	getAllMonsters(list) {

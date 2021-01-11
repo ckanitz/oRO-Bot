@@ -226,8 +226,74 @@
 		"angeling": {
 			"name": "Angeling",
 			"fixed": 60,
-			"flexible": [10],
-			"map": "moc_pryd06"
+			"flexible": [30],
+			"map": "pay_fild04"
+		},
+		"angelingtf": {
+			"name": "Angeling",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "xmas_dun01"
+		},
+		"angelingyuno": {
+			"name": "Angeling",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "yuno_fild03"
+		},
+		"archangeling": {
+			"name": "Angeling",
+			"fixed": 60,
+			"flexible": [3],
+			"map": "yuno_fild05"
+		},
+		"develing": {
+			"name": "Develing",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "gl_prison1"
+		},
+		"dragonfly": {
+			"name": "Dragon Fly",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "moc_fild18"
+		},
+		"ghostring": {
+			"name": "Ghostring",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "pay_fild04"
+		},
+		"ghostringgd": {
+			"name": "Ghostring",
+			"fixed": 240,
+			"flexible": [120],
+			"map": "gld_dun04"
+		},
+		"ghostringht": {
+			"name": "Ghostring",
+			"fixed": 83,
+			"flexible": [57],
+			"map": "prt_maze03"
+		},
+		"ghostringss": {
+			"name": "Ghostring",
+			"fixed": 33,
+			"flexible": [20],
+			"map": "treasure02"
+		},
+		"mayapurple": {
+			"name": "Maya Purple",
+			"fixed": 120,
+			"flexible": [60],
+			"map": "anthell01"
+		},
+		"zealotus": {
+			"name": "Zealotus",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "gl_prison1"
 		}
 	}
 }
