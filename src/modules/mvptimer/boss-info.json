@@ -197,6 +197,12 @@
 			"flexible": [10],
 			"map": "beach_dun"
 		},
+		"thanatos": {
+			"name": "Thanatos",
+			"fixed": 120,
+			"flexible": [],
+			"map": "thana_boss"
+		},
 		"turtlegeneral": {
 			"name": "Turtle General",
 			"fixed": 60,
