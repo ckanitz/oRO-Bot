@@ -39,6 +39,7 @@ class oROBot {
 
 		this.onClientReady();
 		this.onClientMessage();
+		this.onClientDisconnect();
 		this.handleClientLogin(token);
 	}
 
@@ -79,6 +80,12 @@ class oROBot {
 				console.log( `oRO-Bot: $CMD ${command} ${ args } EXEC BY @${ message.author.username }#${ message.author.discriminator }` );
 				cmd.obj[cmd.callback](args, message);
 			}
+		} );
+	}
+
+	onClientDisconnect() {
+		this.client.on( 'error', (err) => {
+			this.handleClientLogin();
 		} );
 	}
 }
