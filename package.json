@@ -1,6 +1,6 @@
 {
 	"name": "oro-discord-bots",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "A simple Discord-Bot to handle information received from originsro.org API and other stuff",
 	"main": "src/index.js",
 	"scripts": {
