@@ -16,7 +16,8 @@
 			"name": "Bio3",
 			"fixed": 100,
 			"flexible": [5,5,5,5,5,5],
-			"map": "lhz_dun03"
+			"map": "lhz_dun03",
+			"ping": "<@&795564364362940426>"
 		},
 		"darklord": {
 			"name": "Dark Lord",
@@ -201,7 +202,8 @@
 			"name": "Thanatos",
 			"fixed": 120,
 			"flexible": [],
-			"map": "thana_boss"
+			"map": "thana_boss",
+			"ping": "<@&805446164618412072>"
 		},
 		"turtlegeneral": {
 			"name": "Turtle General",

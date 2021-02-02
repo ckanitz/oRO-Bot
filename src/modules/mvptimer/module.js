@@ -15,11 +15,12 @@ const { prefix } = require('../../config.json');
 const Module = require('../module.js');
 const config = require('./config.json');
 const bossInfo = require('./boss-info.json');
+const intruderMaps = require('./intruder-maps.json');
 
 const MVP_SPAWNTIMES_IN_MIN = bossInfo.mvps;
 const MINI_BOSS_SPAWNTIMES_IN_MIN = bossInfo.miniBosses;
-const PING_ROLE = '<@&795564364362940426>'; // Thonk
-//const PING_ROLE = '<@&797791785048604692>'; // Test
+const TEST_PING_ROLE = '<@&797791785048604692>'; // Test
+const INTRUDER_ROLE = 'INTRUDERALERT';
 
 /**
  * Mvptimer-Module Class
@@ -175,9 +176,9 @@ class Mvptimer extends Module {
 		}
 
 		// Send the message.
-		if ( reminder === 'ping' || reminder === 'channel' ) {
+		if ( ( reminder === 'ping' || reminder === 'channel' ) && typeof spawninfo.ping !== 'undefined' ) {
 			message.channel
-				.send(`${format(minspawnDate, 'HH:mm:ss')} ${PING_ROLE}`)
+				.send(`${format(minspawnDate, 'HH:mm:ss')} ${spawninfo.ping}`)
 				.then( msg => msg
 								.react('👍')
 								.then( () => msg.react('🤏') ) // :pinched_hand:
@@ -200,13 +201,32 @@ class Mvptimer extends Module {
 				case 'channel':
 					setTimeout(() => {
 						const reminderResponse = this.getChannelReminderMessage( message, spawninfo, spawntimes );
-						message.channel.send(PING_ROLE)
+						message.channel.send('TBD')
 						message.channel.send({ embed: reminderResponse });
 					}, delay);
 					break;
 				default:
 					return;
 			}
+		}
+	}
+
+	onIntruderAlert(args, message) {
+		const hasMapInfo = typeof args[0] !== 'undefined' && typeof intruderMaps[args[0]] !== 'undefined';
+
+		if (hasMapInfo) {
+			// message.channel.send(`${INTRUDER_ROLE} ! X players on map(s) ____`);
+			const timerCommand = args[1] || false;
+
+			if (timerCommand === 'start') {
+				message.channel.send('start big brother');
+			} else if (timerCommand === 'stop') {
+				message.channel.send('stop big brother');
+			} else {
+				message.channel.send('unknown command');
+			}
+		} else {
+			message.channel.send('unknown dungeon');
 		}
 	}
 

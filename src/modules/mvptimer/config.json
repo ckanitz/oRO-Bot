@@ -7,6 +7,11 @@
 			"callback": "onMvptimer",
 			"args": null,
 			"description": "Track the spawntime of a MVP and maybe ping prior spawning."
+		},
+		"intruderalert": {
+			"callback": "onIntruderAlert",
+			"args": null,
+			"description": ""
 		}
 	}
 }
