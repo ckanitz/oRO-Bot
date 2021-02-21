@@ -15,12 +15,13 @@ const { prefix } = require('../../config.json');
 const Module = require('../module.js');
 const config = require('./config.json');
 const bossInfo = require('./boss-info.json');
-const intruderMaps = require('./intruder-maps.json');
+const intruderMapInfo = require('./intruder-maps.json');
 
 const MVP_SPAWNTIMES_IN_MIN = bossInfo.mvps;
 const MINI_BOSS_SPAWNTIMES_IN_MIN = bossInfo.miniBosses;
 const TEST_PING_ROLE = '<@&797791785048604692>'; // Test
 const INTRUDER_ROLE = 'INTRUDERALERT';
+const INTRUDER_MAPS = intruderMapInfo.maps;
 
 /**
  * Mvptimer-Module Class
@@ -212,7 +213,7 @@ class Mvptimer extends Module {
 	}
 
 	onIntruderAlert(args, message) {
-		const hasMapInfo = typeof args[0] !== 'undefined' && typeof intruderMaps[args[0]] !== 'undefined';
+		const hasMapInfo = typeof args[0] !== 'undefined' && typeof INTRUDER_MAPS[args[0]] !== 'undefined';
 
 		if (hasMapInfo) {
 			// message.channel.send(`${INTRUDER_ROLE} ! X players on map(s) ____`);
