@@ -15,7 +15,7 @@
 	"dependencies": {
 		"date-fns": "^2.16.1",
 		"discord.js": "^11.6.4",
-		"lodash": "^4.17.15",
+		"lodash": "^4.17.19",
 		"mysql": "^2.18.1"
 	},
 	"devDependencies": {
