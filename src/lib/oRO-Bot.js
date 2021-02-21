@@ -5,7 +5,8 @@
  */
 
 // Import functions, configs etc.
-const { token } = require( '../config.json' );
+const { token } = require('../config.json');
+const { exit, getCommands, validateMessage } = require('./helper');
 
 /**
  * oROBot class
@@ -18,51 +19,73 @@ class oROBot {
 	 * @param {String} token   The bots token.
 	 * @param {Array}  modules Which modules should be loaded.
 	 */
-	constructor( client, token, modules ) {
-		this.client  = client;
-		this.modules = modules;
+	constructor(client, token, defaultModules = []) {
+		// Bail if client is not an object.
+		if (typeof client !== 'object' ) {
+			exit('invalid Discord Client provided');
+		}
 
-		this.createModules();
-		this.handleEvents();
-		this.handleLogin();
+		// Bail if no modules are defined to load.
+		if (defaultModules.length === 0) {
+			exit('no modules defined');
+		}
+
+		// The Discord Client object.
+		this.client  = client;
+		// Hold for refference.
+		this.modules = defaultModules;
+		// The exposed commands.
+		this.commands = getCommands(this.modules);
+
+		this.onClientReady();
+		this.onClientMessage();
+		this.onClientDisconnect();
+		this.handleClientLogin(token);
 	}
 
 	/**
-	 * HandleLogin function.
+	 * HandleClientLogin function.
 	 *
 	 * @return {void} connects the bot to discord.
 	 */
-	handleLogin() {
-		console.log( 'oRO-Bot: Login to Discord...' );
-		this.client.login( token );
+	handleClientLogin() {
+		console.log('oRO-Bot: Login to Discord...');
+		this.client.login(token);
 	}
 
 	/**
-	 * HandlEvents function.
+	 * OnClientReady function.
 	 *
 	 * @description Handles events the bot should react to.
-	 * @param  {[type]} client [description]
-	 * @return {[type]}        [description]
+	 * @param  {object} client The discord.js object.
+	 * @return {void}
 	 */
-	handleEvents() {
-		console.log( 'oRO-Bot: creating eventlistener...' );
+	onClientReady() {
+		console.log('oRO-Bot: creating `ready` eventlistener...');
 
 		this.client.on( 'ready', () => {
-			console.log( 'oRO-Bot is up and ready' );
+			console.log('oRO-Bot is up and ready');
 		} );
 	}
 
-	/**
-	 * CreateModules function.
-	 *
-	 * @return {void} Creates modules dependig on config.modules.
-	 */
-	createModules() {
-		console.log( 'oRO-Bot: creating modules:', this.modules );
-		// Loop through the config.modules array.
-		this.modules.forEach( ( moduleName ) => {
-			const Mod = require( `../modules/${ moduleName }/module.js` );
-			const module = new Mod( this.client, this.modules );
+	onClientMessage() {
+		// Listen on "message" event.
+		this.client.on( 'message', async message => {
+			// Apply some checks for commands.
+			const { command, args } = validateMessage( message );
+
+			if (!!command && typeof this.commands[command] !== 'undefined' ) {
+				const cmd = this.commands[command];
+				// Handle message if checks don't return false.
+				console.log( `oRO-Bot: $CMD ${command} ${ args } EXEC BY @${ message.author.username }#${ message.author.discriminator }` );
+				cmd.obj[cmd.callback](args, message);
+			}
+		} );
+	}
+
+	onClientDisconnect() {
+		this.client.on( 'error', (err) => {
+			this.handleClientLogin();
 		} );
 	}
 }

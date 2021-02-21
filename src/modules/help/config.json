@@ -1,0 +1,12 @@
+{
+	"name": "Help",
+	"slug": "help",
+	"description": "Simple help module.",
+	"commands": {
+		"help": {
+			"callback": "onHelp",
+			"args": null,
+			"description": "shows all available commands"
+		}
+	}
+}

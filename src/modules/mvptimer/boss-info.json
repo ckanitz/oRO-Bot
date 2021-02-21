@@ -1,0 +1,307 @@
+{
+	"mvps": {
+		"amonra": {
+			"name": "Amon Ra",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "moc_pryd06"
+		},
+		"bapho": {
+			"name": "Baphomet",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "prt_maze03"
+		},
+		"bio3": {
+			"name": "Bio3",
+			"fixed": 100,
+			"flexible": [5,5,5,5,5,5],
+			"map": "lhz_dun03",
+			"ping": "<@&795564364362940426>"
+		},
+		"darklord": {
+			"name": "Dark Lord",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "gl_chyard"
+		},
+		"darklordgd": {
+			"name": "Dark Lord",
+			"fixed": 480,
+			"flexible": [10],
+			"map": "gld_dun04"
+		},
+		"detardeurus": {
+			"name": "Detardeurus",
+			"fixed": 180,
+			"flexible": [10],
+			"map": "abyss_03"
+		},
+		"doppelganger": {
+			"name": "Doppelganger",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "gef_dun02"
+		},
+		"doppelgangergd": {
+			"name": "Doppelganger",
+			"fixed": 480,
+			"flexible": [10],
+			"map": "gld_dun02"
+		},
+		"dracula": {
+			"name": "Dracula",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "gef_dun01"
+		},
+		"drake": {
+			"name": "Drake",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "treasure02"
+		},
+		"eddga": {
+			"name": "Eddga",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "pay_fild11"
+		},
+		"eddgagd": {
+			"name": "Eddga",
+			"fixed": 480,
+			"flexible": [10],
+			"map": "gld_dun01"
+		},
+		"evilsnakelord": {
+			"name": "Evil Snake Lord",
+			"fixed": 94,
+			"flexible": [10],
+			"map": "gon_dun03"
+		},
+		"goldenthiefbug": {
+			"name": "Golden Thief Bug",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "prt_sewb4"
+		},
+		"hati": {
+			"name": "Hati",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "xmas_fild01"
+		},
+		"kield01": {
+			"name": "Kiel-D-01",
+			"fixed": 120,
+			"flexible": [60],
+			"map": "kh_dun02"
+		},
+		"ladytanee": {
+			"fixed": 420,
+			"flexible": [10],
+			"map": "ayo_dun02"
+		},
+		"lordofthedead": {
+			"name": "Lord of the Dead",
+			"fixed": 133,
+			"flexible": [],
+			"map": "niflheim"
+		},
+		"maya": {
+			"name": "Maya",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "anthell02"
+		},
+		"mayagd": {
+			"name": "Maya",
+			"fixed": 480,
+			"flexible": [10],
+			"map": "gld_dun03"
+		},
+		"mistress": {
+			"name": "Mistress",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "mjolnir_04"
+		},
+		"moonlightflower": {
+			"name": "Moonlight Flower",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "pay_dun04"
+		},
+		"orchero": {
+			"name": "Orc Hero",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "gef_fild14"
+		},
+		"orchero2": {
+			"name": "Orc Hero",
+			"fixed": 1440,
+			"flexible": [10],
+			"map": "gef_fild02"
+		},
+		"orclord": {
+			"name": "Orc Lord",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "gef_fild10"
+		},
+		"osiris": {
+			"name": "Osiris",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "moc_pryd04"
+		},
+		"pharao": {
+			"name": "Pharao",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "in_sphinx5"
+		},
+		"phreeoni": {
+			"name": "Phreeoni",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "moc_fild17"
+		},
+		"phreeoniant": {
+			"name": "Phreeoni",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "moc_fild15"
+		},
+		"rsx0806": {
+			"name": "RSX-0806",
+			"fixed": 65,
+			"flexible": [10],
+			"map": "ein_dun02"
+		},
+		"samuraispecter": {
+			"name": "Samurai Specter",
+			"fixed": 91,
+			"flexible": [10],
+			"map": "ama_dun03"
+		},
+		"stormyknight": {
+			"name": "Stormy Knight",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "xmas_dun02"
+		},
+		"taogunka": {
+			"name": "Tao Gunka",
+			"fixed": 300,
+			"flexible": [10],
+			"map": "beach_dun"
+		},
+		"thanatos": {
+			"name": "Thanatos",
+			"fixed": 120,
+			"flexible": [],
+			"map": "thana_boss",
+			"ping": "<@&805446164618412072>"
+		},
+		"turtlegeneral": {
+			"name": "Turtle General",
+			"fixed": 60,
+			"flexible": [10],
+			"map": "tur_dun04"
+		},
+		"valkyrierandgris": {
+			"name": "Valkyrie Randgris",
+			"fixed": 480,
+			"flexible": [10],
+			"map": "odin_tem03"
+		},
+		"vesper": {
+			"name": "Vesper",
+			"fixed": 120,
+			"flexible": [10],
+			"map": "jupe_core"
+		},
+		"whitelady": {
+			"name": "White Lady",
+			"fixed": 116,
+			"flexible": [10],
+			"map": "lou_dun03"
+		}
+	},
+	"miniBosses": {
+		"angeling": {
+			"name": "Angeling",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "pay_fild04"
+		},
+		"angelingtf": {
+			"name": "Angeling",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "xmas_dun01"
+		},
+		"angelingyuno": {
+			"name": "Angeling",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "yuno_fild03"
+		},
+		"archangeling": {
+			"name": "Angeling",
+			"fixed": 60,
+			"flexible": [3],
+			"map": "yuno_fild05"
+		},
+		"develing": {
+			"name": "Develing",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "gl_prison1"
+		},
+		"dragonfly": {
+			"name": "Dragon Fly",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "moc_fild18"
+		},
+		"ghostring": {
+			"name": "Ghostring",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "pay_fild04"
+		},
+		"ghostringgd": {
+			"name": "Ghostring",
+			"fixed": 240,
+			"flexible": [120],
+			"map": "gld_dun04"
+		},
+		"ghostringht": {
+			"name": "Ghostring",
+			"fixed": 83,
+			"flexible": [57],
+			"map": "prt_maze03"
+		},
+		"ghostringss": {
+			"name": "Ghostring",
+			"fixed": 33,
+			"flexible": [20],
+			"map": "treasure02"
+		},
+		"mayapurple": {
+			"name": "Maya Purple",
+			"fixed": 120,
+			"flexible": [60],
+			"map": "anthell01"
+		},
+		"zealotus": {
+			"name": "Zealotus",
+			"fixed": 60,
+			"flexible": [30],
+			"map": "gl_prison1"
+		}
+	}
+}
