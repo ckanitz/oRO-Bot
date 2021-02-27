@@ -1,0 +1,38 @@
+{
+	"version": "0.0.1",
+	"name": "Monster-Mission",
+	"slug": "monstermission",
+	"description": "Monster hunting quest like Taekwon Mission - but for everyone.",
+	"commands": {
+		"mmhelp": {
+			"callback": "onHelp",
+			"args": null,
+			"description": "Show all available commands if this module."
+		},
+		"mmnew": {
+			"callback": "onCharRegistration",
+			"args": "${jobClass} ${charName}",
+			"description": "Registers a new char and responds with the first mission."
+		},
+		"mmkill": {
+			"callback": "onUpdateKillCount",
+			"args": "${killsAmount} ${$charName}",
+			"description": "Updates the killcount of the current mission of the given character.\nResponds with new mission if killcount is >= 100."
+		},
+		"mmreroll": {
+			"callback": "onReRollMission",
+			"args": "${charName}",
+			"description": "Reroll the current mission to receive another monster target."
+		},
+		"mmscore": {
+			"callback": "onShowScore",
+			"args": "${charName}",
+			"description": "Responds with the score of the requests character."
+		},
+		"mmranking": {
+			"callback": "onGetRanking",
+			"args": "${all|class} ${null|charName}",
+			"description": "Responds with the current top ten high score.\nEither of everyone or specific to the given class.\nIf `charName` is given the response will be the current place of the character wether overall or specific to the given class, plus the place +/- 1 in the ranking."
+		}
+	}
+}

@@ -1,13 +1,16 @@
 {
 	"name": "oro-discord-bots",
-	"version": "0.0.2",
+	"version": "0.1.0",
 	"description": "A simple Discord-Bot to handle information received from originsro.org API and other stuff",
 	"main": "src/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "npm install && node src/index.js",
+		"startwdb": "npm install && docker-compose up -d && node src/index.js",
 		"bot": "npm install && docker-compose up -d && node src/index.js",
 		"market": "node src/index.js --help --market",
-		"mvptimer": "node src/index.js"
+		"mvptimer": "node src/index.js --mvptimer",
+		"mm": "node src/index.js --monstermission"
 	},
 	"keywords": [],
 	"author": "",
