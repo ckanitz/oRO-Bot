@@ -258,7 +258,7 @@ class Monstermission extends Module {
 				},
 				{
 					name: 'Spawns:',
-					value: this.getTopMonsterSpawns(monster.maps) || '',
+					value: this.getTopMonsterSpawns(monster.maps),
 				},
 				{
 					name: 'Info:',
@@ -300,7 +300,7 @@ class Monstermission extends Module {
 	 * @return {String}     Top 3 spawns as list string.
 	 */
 	getTopMonsterSpawns(maps) {
-		let response = '';
+		let response = '---';
 
 		if (maps.length <= 0) {
 			return response;
