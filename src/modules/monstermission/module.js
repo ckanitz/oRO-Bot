@@ -70,6 +70,11 @@ class Monstermission extends Module {
 			});
 		});
 
+		fields.push({
+			name: 'JobClasses:',
+			value: JOB_CLASSES.join(', '),
+		});
+
 		response.fields = fields;
 
 		message.channel.send({embed: response});
