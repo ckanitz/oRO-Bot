@@ -64,7 +64,7 @@ class FileHandler {
 	 * @return {String}       Full path to the ranking file of the given guild.
 	 */
 	getGuildScoreFilePath(guild) {
-		return `${this.dir}/rankings/${guild.name}_-_${guild.id}.json`;
+		return `${this.dir}/rankings/${escape(guild.name)}_-_${guild.id}.json`;
 	}
 
 	/**
