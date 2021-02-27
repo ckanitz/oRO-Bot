@@ -76,6 +76,7 @@ class FileHandler {
 	 */
 	getCharacterIndex(character, guild, guildScore = null) {
 		const _guildScore = guildScore || this.readGuildScore(guild);
+		console.log(_guildScore, { id: character.id, charName: character.charName});
 		return findIndex(_guildScore, { id: character.id, charName: character.charName})
 	}
 
@@ -187,9 +188,10 @@ class FileHandler {
 	 * @return {mixed}            The character data or false.
 	 */
 	readCharacter(character, guild) {
-		console.log('readCharacter');
+		console.log('readCharacter', character, guild);
 		const guildScore = this.readGuildScore(guild);
 		const charScoreIndex = this.getCharacterIndex(character, guild, guildScore);
+
 		return guildScore[ charScoreIndex ] || false;
 	}
 

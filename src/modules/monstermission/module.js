@@ -185,7 +185,7 @@ class Monstermission extends Module {
 			return;
 		}
 
-		const charName = this.getCharName(args, 1);
+		const charName = this.getCharName(args, 0);
 		const character = this.db.readCharacter({ id: message.author.id, charName }, message.guild);
 		const newCharacter = {...character};
 
