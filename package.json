@@ -6,8 +6,8 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "npm install && node src/index.js",
-		"startwdb": "npm install && docker-compose up -d && node src/index.js",
-		"bot": "npm install && docker-compose up -d && node src/index.js",
+		"botwdb": "npm install && docker-compose up -d && node src/index.js",
+		"bot": "npm install && node src/index.js",
 		"market": "node src/index.js --help --market",
 		"mvptimer": "node src/index.js --mvptimer",
 		"mm": "node src/index.js --monstermission"
