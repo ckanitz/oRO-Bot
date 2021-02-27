@@ -190,7 +190,6 @@ class FileHandler {
 		console.log('readCharacter');
 		const guildScore = this.readGuildScore(guild);
 		const charScoreIndex = this.getCharacterIndex(character, guild, guildScore);
-		console.log({charScoreIndex});
 		return guildScore[ charScoreIndex ] || false;
 	}
 

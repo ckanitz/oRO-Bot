@@ -247,7 +247,7 @@ class Monstermission extends Module {
 		const monster = MONSTERS[ monsterIndex ];
 		const response = {
 			color: 0x00ff6e,
-			title: `Ahoy **${character.name}**! Here is your current mission for **${character.charName}**. Don't fuck it up.`,
+			title: `Ahoy \`${character.name}\`! Here is your current mission for \`${character.charName}\`. Don't fuck it up.`,
 			thumbnail: {
 				url: `https://cp.originsro.org/data/images/monsters/${monster.id}.gif`,
 			},
@@ -258,7 +258,7 @@ class Monstermission extends Module {
 				},
 				{
 					name: 'Spawns:',
-					value: this.getTopMonsterSpawns(monster.maps),
+					value: this.getTopMonsterSpawns(monster.maps) || '',
 				},
 				{
 					name: 'Info:',
@@ -269,6 +269,7 @@ class Monstermission extends Module {
 				text: `oRO-Bot v${ version } - MonsterMission version v${config.version}`,
 			},
 		};
+		console.log(response);
 		channel.send({embed: response});
 	}
 

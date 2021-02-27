@@ -6,7 +6,7 @@
 	"commands": {
 		"mmhelp": {
 			"callback": "onHelp",
-			"args": null,
+			"args": "",
 			"description": "Show all available commands if this module."
 		},
 		"mmnew": {
