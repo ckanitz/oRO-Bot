@@ -17,7 +17,7 @@
 			"fixed": 100,
 			"flexible": [5,5,5,5,5,5],
 			"map": "lhz_dun03",
-			"ping": "<@&795564364362940426>"
+			"ping": "<@&805446223133671464>"
 		},
 		"darklord": {
 			"name": "Dark Lord",
@@ -203,7 +203,7 @@
 			"fixed": 120,
 			"flexible": [],
 			"map": "thana_boss",
-			"ping": "<@&805446164618412072>"
+			"ping": "<@&795564364362940426>"
 		},
 		"turtlegeneral": {
 			"name": "Turtle General",
